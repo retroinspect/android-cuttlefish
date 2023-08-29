@@ -21,6 +21,7 @@ import (
 	"net/http/httputil"
 	"net/url"
 	"os"
+	"strings"
 	"sync"
 
 	apiv1 "github.com/google/android-cuttlefish/frontend/src/liboperator/api/v1"
@@ -66,7 +67,8 @@ func fromEnvOrDefault(key string, def string) string {
 
 // Whether a device file request should be intercepted and served from the signaling server instead
 func maybeIntercept(path string) *string {
-	if path == "/js/server_connector.js" {
+	fmt.Println("maybe intercept")
+	if strings.HasSuffix(path, "/js/server_connector.js") {
 		alt := fmt.Sprintf("%s%s", DefaultInterceptDir, path)
 		return &alt
 	}
